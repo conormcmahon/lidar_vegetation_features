@@ -30,10 +30,10 @@ remove erroneously high or low points (e.g. powerlines, subteranean noise)
 namespace lidar_vegetation_features
 {
     template <typename Keypoint, typename VegType, typename VegCloud, typename SearchTree>
-    pcl::TTVF generateTTVFPoint(Keypoint point, VegType point_example, VegCloud cloud, SearchTree tree);
+    pcl::TTVF generateTTVFPoint(Keypoint point, VegType point_example, VegCloud cloud, pcl::PointCloud<pcl::PointNormal>::Ptr normals, SearchTree tree, pcl::KdTreeFLANN<pcl::PointNormal>::Ptr tree_normal);
     
     template <typename KeypointCloudType, typename VegCloudType, typename VegTree>
-    void generateTTVFCloud(KeypointCloudType keypoints, VegCloudType veg_cloud, VegTree tree, pcl::PointCloud<pcl::TTVF>::Ptr feature_cloud);
+    void generateTTVFCloud(KeypointCloudType keypoints, VegCloudType veg_cloud, pcl::PointCloud<pcl::PointNormal>::Ptr normals, VegTree tree, pcl::PointCloud<pcl::TTVF>::Ptr feature_cloud);
 
 };
 

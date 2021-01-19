@@ -15,6 +15,7 @@ struct TTVF
     float height;                       // Treetop Height over Ground
     float search_window;                // Search Window in which to look for other potential maxima
     float point_density; 
+    float canopy_structure_density; 
     float height_pct_100;
     float height_pct_75;
     float height_pct_50;
@@ -23,6 +24,10 @@ struct TTVF
     float height_50_frac;
     float height_25_frac;
     float normal_angle_rmse;
+    float normal_pct_100;
+    float normal_pct_75;
+    float normal_pct_50;
+    float normal_pct_25;
     
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW     // Ensure proper alignment
   } EIGEN_ALIGN16;
@@ -35,6 +40,7 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(pcl::TTVF,
                                   (float, height, height)
                                   (float, search_window, search_window)
                                   (float, point_density, point_density)
+                                  (float, canopy_structure_density, canopy_structure_density)
                                   (float, height_pct_100, height_pct_100)
                                   (float, height_pct_75, height_pct_75)
                                   (float, height_pct_50, height_pct_50)
@@ -43,6 +49,10 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(pcl::TTVF,
                                   (float, height_50_frac, height_50_frac)
                                   (float, height_25_frac, height_25_frac)
                                   (float, normal_angle_rmse, normal_angle_rmse)
+                                  (float, normal_pct_100, normal_pct_100)
+                                  (float, normal_pct_75, normal_pct_75)
+                                  (float, normal_pct_50, normal_pct_50)
+                                  (float, normal_pct_25, normal_pct_25)
 )
 
 namespace pcl {

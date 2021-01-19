@@ -1,4 +1,7 @@
 
+#ifndef VEGETATION_CANOPY_HPP_
+#define VEGETATION_CANOPY_HPP_
+
 #include "lidar_vegetation_features/vegetation_canopy.h"
 
 template <typename VegCloud>
@@ -49,3 +52,28 @@ bool vegetation_canopy::statisticalOutlierCheck(VegPoint point, VegCloud cloud, 
     std::cout << fabs((point.z - mean_z) / stdev_z) << " " << mean_z << " " << stdev_z << " " << point.x << " " << point.y << " " << point.z << std::endl;
     return (fabs((point.z - mean_z) / stdev_z) < z_score_limit);
 }
+
+
+
+template <typename VegPoint, typename VegCloud>
+void vegetation_canopy::estimateNormals(VegCloud input, pcl::PointCloud<pcl::PointNormal>::Ptr output, int num_neighbors)
+{
+    pcl::PointCloud<pcl::PointXYZ>::Ptr input_xyz(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::copyPointCloud3D(input, input_xyz);
+    // Normal Estimation Object
+    pcl::NormalEstimation<pcl::PointXYZ, pcl::PointNormal> normal_estimation;
+    normal_estimation.setInputCloud(input_xyz);
+    // KD Search Tree to find point neighbors
+    //typedef typename pcl::search::KdTree<VegPoint> VegTree;
+    //typedef typename pcl::search::KdTree<VegPoint>::Ptr VegTreePtr;
+    //VegTreePtr tree (new VegTree);
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
+    normal_estimation.setSearchMethod(tree);
+    // Search size for neighbors to be used in normal estimation
+    normal_estimation.setKSearch(num_neighbors);  
+    // Compute the normals
+    normal_estimation.compute(*output);
+    pcl::copyPointCloud3D(input_xyz, output);
+}
+
+#endif //VEGETATION_CANOPY_HPP_
